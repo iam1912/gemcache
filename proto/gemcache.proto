@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package proto; // 包名
+option go_package = "../proto";
+
+service GroupCache {
+    rpc Get(GetRequest) returns (GetResponse) {}
+}
+
+message GetRequest {
+    string group = 1;
+    string key = 2;
+}
+
+message GetResponse {
+    bytes value = 1;
+}
