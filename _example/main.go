@@ -95,19 +95,19 @@ func createGroup() *gemcache.Group {
 		}))
 }
 
-func startCacheServer(addr string, addrs []string, gee *gemcache.Group) {
+func startCacheServer(addr string, addrs []string, gem *gemcache.Group) {
 	peers := gemcache.NewHTTPool(addr)
 	peers.Set(addrs...)
-	gee.RegisterPeers(peers)
+	gem.RegisterPeers(peers)
 	log.Println("geecache is running at", addr)
 	log.Fatal(http.ListenAndServe(addr[7:], peers))
 }
 
-func startAPIServer(apiAddr string, gee *gemcache.Group) {
+func startAPIServer(apiAddr string, gem *gemcache.Group) {
 	http.Handle("/api", http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			key := r.URL.Query().Get("key")
-			view, err := gee.Get(key)
+			view, err := gem.Get(key)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
@@ -138,9 +138,9 @@ func main() {
 		addrs = append(addrs, v)
 	}
 
-	gee := createGroup()
+	gem := createGroup()
 	if api {
-		go startAPIServer(apiAddr, gee)
+		go startAPIServer(apiAddr, gem)
 	}
-	startCacheServer(addrMap[port], []string(addrs), gee)
+	startCacheServer(addrMap[port], []string(addrs), gem)
 }

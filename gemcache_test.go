@@ -13,7 +13,7 @@ var db = map[string]string{
 
 func TestGet(t *testing.T) {
 	loadCounts := make(map[string]int, len(db))
-	
+
 	cache := NewGroup("scores", 2<<10, GetterFunc(
 		func(key string) ([]byte, error) {
 			if v, ok := db[key]; ok {
