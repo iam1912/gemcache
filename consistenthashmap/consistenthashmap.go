@@ -32,7 +32,6 @@ func New(replicas int, fn Hash) *Map {
 		keys:     make(HashRing, 0),
 		nums:     make(map[string]int),
 		ring:     make(map[uint32]string),
-		mu:       sync.RWMutex{},
 	}
 	if fn == nil {
 		h.hash = crc32.ChecksumIEEE
