@@ -38,7 +38,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/iam1912/gemcache"
+	"github.com/iam1912/gemseries/gemcache"
 )
 
 // import (
